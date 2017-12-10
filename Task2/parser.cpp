@@ -16,7 +16,7 @@ node_ptr parser::parse_descr_list() {
             throw parser_exception("Wrong first of description list", lex.get_cur_pos());
     }
     if (lex.get_cur_token() != END) {
-        throw parser_exception("Wrong follow of description", lex.get_cur_pos());
+        throw parser_exception("Wrong follow of description list", lex.get_cur_pos());
     }
     return node;
 }
@@ -39,7 +39,6 @@ node_ptr parser::parse_descr_list_continue() {
     return node;
 }
 
-// +
 node_ptr parser::parse_descr() {
     node_ptr node = new Node("DESCR");
     switch (lex.get_cur_token()) {
@@ -58,7 +57,6 @@ node_ptr parser::parse_descr() {
     return node;
 }
 
-//+
 node_ptr parser::parse_var_list() {
     node_ptr node = new Node("VAR_LIST");
     switch (lex.get_cur_token()) {
@@ -76,7 +74,6 @@ node_ptr parser::parse_var_list() {
     return node;
 }
 
-// +
 node_ptr parser::parse_var_list_continue() {
     node_ptr node = new Node("VAR_LIST'");
     switch (lex.get_cur_token()) {
@@ -97,7 +94,6 @@ node_ptr parser::parse_var_list_continue() {
     return node;
 }
 
-// +
 node_ptr parser::parse_var() {
     node_ptr node = new Node("VAR");
     switch(lex.get_cur_token()) {
@@ -118,8 +114,8 @@ node_ptr parser::parse_var() {
     return node;
 }
 
-// +
 node_ptr parser::parse_name(bool is_type) {
+    node_ptr node = new Node(is_type  ? "TYPE_NAME" : "VAR_NAME");
     string name;
     while (lex.cur_is_letter()) {
         name += lex.get_cur_char();
@@ -138,5 +134,6 @@ node_ptr parser::parse_name(bool is_type) {
             throw parser_exception("Wrong follow of variable name", lex.get_cur_pos());
         }
     }
-    return new Node(name);
+    node->children.push_back(new Node(name));
+    return node;
 }

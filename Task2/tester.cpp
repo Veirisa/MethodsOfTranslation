@@ -1,4 +1,4 @@
-#include "parser.h"
+#include "visualizer.h"
 
 void get_from_tree(string& s, node_ptr node) {
     if (node->children.empty()) {
@@ -40,13 +40,13 @@ string delete_blanks(const string& s) {
 const size_t TESTS_SIZE = 8;
 const string test[8] =
         { "int aA;",
-          "  int  aA   ; ",
+          "  int  \naA\n   \n; ",
           "long ***zZ;",
-          " long   **   *  zZ;   ",
-          "double**qQ,    **wW, Bb;",
-          "    double  * *qQ   ,   *wW,* *  *   bBb    ;",
+          " long   **\n\n*  zZ;   ",
+          "double **qQ, **wW, Bb;",
+          "    double  * *qQ \n\n\n , \n  *wW,* *  *   bBb    ;",
           "float qQ, *wW, ***bBb; float *****qQ, x, mm; int x, xx, xxx, xxxx, **d;",
-          "    float  qQ,   * wW ,  * * * bBb;float* *  ***qQ, x, mm;    int x,xx,* xxx   , xxxx, * *d;  "
+          "\n    float\n\nqQ,   * wW ,  * *\n * bBb;float* *  ***qQ, x, mm;  \n\n  int x,xx,* xxx   , xxxx, * *d;  \n\n"
         };
 
 int main() {
@@ -59,10 +59,14 @@ int main() {
         cout << i << ": " << (tree_string == delete_blanks(test[i]) ? "OK" : "FAIL") << "\n";
     }
 
-    cout << "\n" << "your test: \n\n";
-    string test_string, tree_string;
-    getline(cin, test_string);
-    get_from_tree(tree_string, test_parser.parse(test_string));
-    cout << (tree_string == delete_blanks(test_string) ? "OK" : "FAIL") << "\n";
+    cout << "\n" << "test for visualization: \n";
+    string test_string = "int a, *b, ***c, d;";
+    string tree_string;
+    node_ptr root = test_parser.parse(test_string);
+    get_from_tree(tree_string, root);
+    cout << test_string << "\n" << (tree_string == delete_blanks(test_string) ? "OK" : "FAIL") << "\n";
+
+    visualizer test_visualizer(root);
+
     return 0;
 }

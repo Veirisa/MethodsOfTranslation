@@ -8,13 +8,11 @@
 *`DESCR_LIST`* -> *`DESCR DESCR_LIST'`*<br>
 *`DESCR_LIST'`* -> *`DESCR DESCR_LIST'`* | *`eps`* <br>
 *`DESCR`* -> *`TYPE_NAME VAR_LIST;`*<br>
-*`TYPE_NAME`* ->*`[A-Za-z]TYPE_NAME'`*<br>
-*`TYPE_NAME'`* ->*`[A-Za-z]TYPE_NAME'`* | *`eps`*<br>
+*`TYPE_NAME`* ->*`[A-Za-z]([A-Za-z])*`*<br>
 *`VAR_LIST`* -> *`VAR VAR_LIST'`*<br>
 *`VAR_LIST'`* -> *`,VAR VAR_LIST'`* | *`eps`*<br>
-*`VAR`* -> *`*VAR`* | *`NAME`*<br>
-*`VAR_NAME`* ->*`[A-Za-z]VAR_NAME'`*<br>
-*`VAR_NAME'`* ->*`[A-Za-z]VAR_NAME'`* | *`eps`*<br>
+*`VAR`* -> *`*VAR`* | *`VAR_NAME`*<br>
+*`VAR_NAME`* ->*`[A-Za-z]([A-Za-z])*`*<br>
 
 Нетерминал | Описание | FIRST | FOLLOW
 -|-|-|-
@@ -22,9 +20,7 @@ DESCR_LIST | Список строк описаний | `[A-Za-z]` | `$`
 DESCR_LIST' | Продолжение списка строк описаний | `[A-Za-z]`, `eps` | `$`
 DESCR | Строка описаний | `[A-Za-z]` | `[A-Za-z]`, `$`
 TYPE_NAME | Имя типа | `[A-Za-z]` | `*`, `[A-Za-z]`
-TYPE_NAME' | Продолжение имени типа | `[A-Za-z]`, `eps` | `*`, `[A-Za-z]`
 VAR_LIST | Список переменных | `*`, `[A-Za-z]` | `;`
 VAR_LIST' | Продолжение списка переменных |  `,`, `eps`  | `;`
 VAR | Переменная  |  `*`, `[A-Za-z]` | `,`,`;`
 VAR_NAME | Имя переменной |  `[A-Za-z]` | `,`,`;`
-VAR_NAME' | Продолжение имени переменной | `[A-Za-z]`, `eps` | `,`,`;`

@@ -28,4 +28,4 @@ VAR_NAME | Имя переменной |  `[A-Za-z]` | `,`,`;`
 ## Пример
 Дерево разбора для: *int a, \*b, \*\*\*c, d;*<br>
 
-<img src="tree.png" style="width: 600px; float: midle" />
+<img src="tree.png" style="width: 500px; float: midle" />

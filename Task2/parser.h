@@ -24,8 +24,10 @@ private:
     lexical_analyzer lex;
 
     node_ptr parse_descr_list();
+    node_ptr parse_descr_list_continue();
     node_ptr parse_descr();
     node_ptr parse_var_list();
+    node_ptr parse_var_list_continue();
     node_ptr parse_var();
     node_ptr parse_name(bool is_type);
 };

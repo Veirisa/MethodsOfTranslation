@@ -5,7 +5,7 @@
 Пример: int a, *b, ***c, d;<br>
 
 ## Грамматика
-*`DESCR_LIST`* -> *`DESCR DESCR_LIST`*<br>
+*`DESCR_LIST`* -> *`DESCR DESCR_LIST'`*<br>
 *`DESCR_LIST'`* -> *`DESCR DESCR_LIST'`* | *`eps`* <br>
 *`DESCR`* -> *`TYPE_NAME VAR_LIST;`*<br>
 *`TYPE_NAME`* ->*`[A-Za-z]TYPE_NAME'`*<br>
@@ -13,8 +13,8 @@
 *`VAR_LIST`* -> *`VAR VAR_LIST'`*<br>
 *`VAR_LIST'`* -> *`,VAR VAR_LIST'`* | *`eps`*<br>
 *`VAR`* -> *`*VAR`* | *`NAME`*<br>
-*`VAR_NAME`* ->*`[A-Za-z]NAME'`*<br>
-*`VAR_NAME'`* ->*`[A-Za-z]NAME'`* | *`eps`*<br>
+*`VAR_NAME`* ->*`[A-Za-z]VAR_NAME'`*<br>
+*`VAR_NAME'`* ->*`[A-Za-z]VAR_NAME'`* | *`eps`*<br>
 
 Нетерминал | Описание | FIRST | FOLLOW
 -|-|-|-

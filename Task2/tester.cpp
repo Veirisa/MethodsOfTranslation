@@ -2,6 +2,7 @@
 
 void get_from_tree(string& s, node_ptr node) {
     if (node->children.empty()) {
+        if (node->str != "DESCR_LIST'" && node->str != "VAR_LIST'")
         s.append(node->str);
     } else {
         for (size_t i = 0; i < node->children.size(); ++i) {
@@ -50,10 +51,18 @@ const string test[8] =
 
 int main() {
     parser test_parser;
+
+    cout << "default tests: \n";
     for (size_t i = 0; i < TESTS_SIZE; ++i) {
         string tree_string;
         get_from_tree(tree_string, test_parser.parse(test[i]));
         cout << i << ": " << (tree_string == delete_blanks(test[i]) ? "OK" : "FAIL") << "\n";
     }
+
+    cout << "\n" << "your test: \n\n";
+    string test_string, tree_string;
+    getline(cin, test_string);
+    get_from_tree(tree_string, test_parser.parse(test_string));
+    cout << (tree_string == delete_blanks(test_string) ? "OK" : "FAIL") << "\n";
     return 0;
 }

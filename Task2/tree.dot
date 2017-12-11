@@ -2,7 +2,7 @@ digraph {
 1[label = "DESCR_LIST"]
 2[label = "DESCR"]
 3[label = "TYPE_NAME"]
-4[label = "int "]
+4[label = "int"]
 3 -> 4;
 2 -> 3;
 5[label = "VAR_LIST"]

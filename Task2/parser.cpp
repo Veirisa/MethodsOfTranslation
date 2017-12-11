@@ -2,6 +2,7 @@
 
 node_ptr parser::parse(const string& s) {
     lex = lexical_analyzer(s + '$');
+    lex.next_token();
     return parse_descr_list();
 };
 
@@ -45,8 +46,8 @@ node_ptr parser::parse_descr() {
         case NAME:
             node->children.push_back(parse_type_name());
             node->children.push_back(parse_var_list());
-            node->children.push_back(make_shared<Node>(Node(";")));
-            lex.next_pos();
+            node->children.push_back(make_shared<Node>(Node(lex.get_token_string())));
+            lex.next_token();
             break;
         default:
             throw parser_exception("Wrong first of desctiption", lex.get_cur_pos());
@@ -61,7 +62,8 @@ node_ptr parser::parse_type_name() {
     node_ptr node = make_shared<Node>(Node("TYPE_NAME"));
     switch (lex.get_cur_token()) {
         case NAME:
-            node->children.push_back(make_shared<Node>(Node(get_name() + ' ')));
+            node->children.push_back(make_shared<Node>(Node(lex.get_token_string())));
+            lex.next_token();
             break;
         default:
             throw parser_exception("Wrong first of type name", lex.get_cur_pos());
@@ -93,8 +95,8 @@ node_ptr parser::parse_var_list_continue() {
     node_ptr node = make_shared<Node>(Node("VAR_LIST'"));
     switch (lex.get_cur_token()) {
         case COMMA:
-            node->children.push_back(make_shared<Node>(Node(",")));
-            lex.next_pos();
+            node->children.push_back(make_shared<Node>(Node(lex.get_token_string())));
+            lex.next_token();
             node->children.push_back(parse_var());
             node->children.push_back(parse_var_list_continue());
             break;
@@ -113,8 +115,8 @@ node_ptr parser::parse_var() {
     node_ptr node = make_shared<Node>(Node("VAR"));
     switch (lex.get_cur_token()) {
         case STAR:
-            node->children.push_back(make_shared<Node>(Node("*")));
-            lex.next_pos();
+            node->children.push_back(make_shared<Node>(Node(lex.get_token_string())));
+            lex.next_token();
             node->children.push_back(parse_var());
             break;
         case NAME:
@@ -133,7 +135,8 @@ node_ptr parser::parse_var_name() {
     node_ptr node = make_shared<Node>(Node("VAR_NAME"));
     switch (lex.get_cur_token()) {
         case NAME:
-            node->children.push_back(make_shared<Node>(Node(get_name())));
+            node->children.push_back(make_shared<Node>(Node(lex.get_token_string())));
+            lex.next_token();
             break;
         default:
             throw parser_exception("Wrong first of variable name", lex.get_cur_pos());
@@ -142,13 +145,4 @@ node_ptr parser::parse_var_name() {
         throw parser_exception("Wrong follow of variable name", lex.get_cur_pos());
     }
     return node;
-}
-
-string parser::get_name() {
-    string name;
-    while (lex.cur_is_letter()) {
-        name += lex.get_cur_char();
-        lex.next_pos();
-    }
-    return name;
 }

@@ -31,7 +31,6 @@ private:
     node_ptr parse_var_list_continue();
     node_ptr parse_var();
     node_ptr parse_var_name();
-    string get_name();
 };
 
 #endif //PARSER_H

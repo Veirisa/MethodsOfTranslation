@@ -1,12 +1,16 @@
 #include "visualizer.h"
 
-void get_from_tree(string& s, node_ptr node) {
+void get_from_tree(bool is_type_name, string& s, node_ptr node) {
     if (node->children.empty()) {
-        if (node->str != "DESCR_LIST'" && node->str != "VAR_LIST'")
-        s.append(node->str);
+        if (node->str.back() != '\'') {
+            s += node->str;
+            if (is_type_name) {
+                s += ' ';
+            }
+        }
     } else {
         for (size_t i = 0; i < node->children.size(); ++i) {
-            get_from_tree(s, node->children[i]);
+            get_from_tree(node->str == "TYPE_NAME", s, node->children[i]);
         }
     }
 }
@@ -59,14 +63,14 @@ int main() {
     cout << "default tests: \n";
     for (size_t i = 0; i < TESTS_SIZE; ++i) {
         string tree_string;
-        get_from_tree(tree_string, test_parser.parse(default_test[i]));
+        get_from_tree(false, tree_string, test_parser.parse(default_test[i]));
         cout << i << ": " << (tree_string == delete_blanks(default_test[i]) ? "OK" : "FAIL") << "\n";
     }
 
     cout << "\n" << "test for visualization: \n";
     string tree_string;
     node_ptr root = test_parser.parse(test);
-    get_from_tree(tree_string, root);
+    get_from_tree(false, tree_string, root);
     cout << test << "\n" << (tree_string == delete_blanks(test) ? "OK" : "FAIL") << "\n";
 
     visualizer test_visualizer(root);

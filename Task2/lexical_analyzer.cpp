@@ -1,8 +1,8 @@
 #include "lexical_analyzer.h"
 
-lexical_analyzer::lexical_analyzer() : s(), cur_pos(0), cur_token(BEGIN), token_length(0) {};
+lexical_analyzer::lexical_analyzer() : s(), cur_pos(0), cur_token(BEGIN), cur_token_length(0) {};
 
-lexical_analyzer::lexical_analyzer(const string& in) : s(in), cur_pos(0), cur_token(BEGIN), token_length(0) {};
+lexical_analyzer::lexical_analyzer(const string& in) : s(in), cur_pos(0), cur_token(BEGIN), cur_token_length(0) {};
 
 bool lexical_analyzer::is_blank(size_t pos) {
     return s[pos] == ' ' || s[pos] == '\r' || s[pos] == '\n' || s[pos] == '\t';
@@ -24,11 +24,11 @@ void lexical_analyzer::inc_pos(size_t x) {
 }
 
 void lexical_analyzer::next_token() {
-    inc_pos(token_length);
+    inc_pos(cur_token_length);
     while (is_blank(cur_pos)) {
         inc_pos(1);
     }
-    token_length = 1;
+    cur_token_length = 1;
     switch (s[cur_pos]) {
         case '*':
             cur_token = STAR;
@@ -45,8 +45,8 @@ void lexical_analyzer::next_token() {
         default:
             if (is_letter(cur_pos)) {
                 cur_token = NAME;
-                while (!is_last(cur_pos + token_length - 1) && is_letter(cur_pos + token_length)) {
-                    ++token_length;
+                while (!is_last(cur_pos + cur_token_length - 1) && is_letter(cur_pos + cur_token_length)) {
+                    ++cur_token_length;
                 }
             } else {
                 throw parser_exception("Illegal character", cur_pos);
@@ -62,6 +62,6 @@ token lexical_analyzer::get_cur_token() {
     return cur_token;
 }
 
-string lexical_analyzer::get_token_string() {
-    return string(s, cur_pos, token_length);
+string lexical_analyzer::get_cur_token_string() {
+    return string(s, cur_pos, cur_token_length);
 }

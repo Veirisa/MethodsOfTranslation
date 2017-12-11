@@ -17,14 +17,14 @@ struct lexical_analyzer {
 
     size_t get_cur_pos();
     token get_cur_token();
-    string get_token_string();
+    string get_cur_token_string();
 
 private:
 
     string s;
     size_t cur_pos;
     token cur_token;
-    size_t token_length;
+    size_t cur_token_length;
 
     void inc_pos(size_t x);
 
@@ -32,6 +32,5 @@ private:
     bool is_letter(size_t pos);
     bool is_last(size_t pos);
 };
-
 
 #endif //LEXICAL_ANALYZER_H

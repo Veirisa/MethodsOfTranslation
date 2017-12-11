@@ -46,7 +46,7 @@ node_ptr parser::parse_descr() {
         case NAME:
             node->children.push_back(parse_type_name());
             node->children.push_back(parse_var_list());
-            node->children.push_back(make_shared<Node>(Node(lex.get_token_string())));
+            node->children.push_back(make_shared<Node>(Node(lex.get_cur_token_string())));
             lex.next_token();
             break;
         default:
@@ -62,7 +62,7 @@ node_ptr parser::parse_type_name() {
     node_ptr node = make_shared<Node>(Node("TYPE_NAME"));
     switch (lex.get_cur_token()) {
         case NAME:
-            node->children.push_back(make_shared<Node>(Node(lex.get_token_string())));
+            node->children.push_back(make_shared<Node>(Node(lex.get_cur_token_string())));
             lex.next_token();
             break;
         default:
@@ -95,7 +95,7 @@ node_ptr parser::parse_var_list_continue() {
     node_ptr node = make_shared<Node>(Node("VAR_LIST'"));
     switch (lex.get_cur_token()) {
         case COMMA:
-            node->children.push_back(make_shared<Node>(Node(lex.get_token_string())));
+            node->children.push_back(make_shared<Node>(Node(lex.get_cur_token_string())));
             lex.next_token();
             node->children.push_back(parse_var());
             node->children.push_back(parse_var_list_continue());
@@ -115,7 +115,7 @@ node_ptr parser::parse_var() {
     node_ptr node = make_shared<Node>(Node("VAR"));
     switch (lex.get_cur_token()) {
         case STAR:
-            node->children.push_back(make_shared<Node>(Node(lex.get_token_string())));
+            node->children.push_back(make_shared<Node>(Node(lex.get_cur_token_string())));
             lex.next_token();
             node->children.push_back(parse_var());
             break;
@@ -135,7 +135,7 @@ node_ptr parser::parse_var_name() {
     node_ptr node = make_shared<Node>(Node("VAR_NAME"));
     switch (lex.get_cur_token()) {
         case NAME:
-            node->children.push_back(make_shared<Node>(Node(lex.get_token_string())));
+            node->children.push_back(make_shared<Node>(Node(lex.get_cur_token_string())));
             lex.next_token();
             break;
         default:

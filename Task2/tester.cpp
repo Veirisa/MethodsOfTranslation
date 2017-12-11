@@ -37,8 +37,9 @@ string delete_blanks(const string& s) {
     return result;
 }
 
+//default tests:
 const size_t TESTS_SIZE = 8;
-const string test[8] =
+const string default_test[TESTS_SIZE] =
         { "int aA;",
           "  int  \naA\n   \n; ",
           "long ***zZ;",
@@ -49,22 +50,24 @@ const string test[8] =
           "\n    float\n\nqQ,   * wW ,  * *\n * bBb;float* *  ***qQ, x, mm;  \n\n  int x,xx,* xxx   , xxxx, * *d;  \n\n"
         };
 
+//test for visualisation:
+const string test = "int a, *b, ***c, d;";
+
 int main() {
     parser test_parser;
 
     cout << "default tests: \n";
     for (size_t i = 0; i < TESTS_SIZE; ++i) {
         string tree_string;
-        get_from_tree(tree_string, test_parser.parse(test[i]));
-        cout << i << ": " << (tree_string == delete_blanks(test[i]) ? "OK" : "FAIL") << "\n";
+        get_from_tree(tree_string, test_parser.parse(default_test[i]));
+        cout << i << ": " << (tree_string == delete_blanks(default_test[i]) ? "OK" : "FAIL") << "\n";
     }
 
     cout << "\n" << "test for visualization: \n";
-    string test_string = "int a, *b, ***c, d;";
     string tree_string;
-    node_ptr root = test_parser.parse(test_string);
+    node_ptr root = test_parser.parse(test);
     get_from_tree(tree_string, root);
-    cout << test_string << "\n" << (tree_string == delete_blanks(test_string) ? "OK" : "FAIL") << "\n";
+    cout << test << "\n" << (tree_string == delete_blanks(test) ? "OK" : "FAIL") << "\n";
 
     visualizer test_visualizer(root);
 

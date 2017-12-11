@@ -44,7 +44,7 @@ const string test[8] =
           "long ***zZ;",
           " long   **\n\n*  zZ;   ",
           "double **qQ, **wW, Bb;",
-          "    double  * *qQ \n\n\n , \n  *wW,* *  *   bBb    ;",
+          "    double* *qQ \n\n\n , \n  *wW,* *  *   bBb    ;",
           "float qQ, *wW, ***bBb; float *****qQ, x, mm; int x, xx, xxx, xxxx, **d;",
           "\n    float\n\nqQ,   * wW ,  * *\n * bBb;float* *  ***qQ, x, mm;  \n\n  int x,xx,* xxx   , xxxx, * *d;  \n\n"
         };

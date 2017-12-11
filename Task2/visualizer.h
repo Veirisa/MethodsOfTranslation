@@ -13,7 +13,7 @@ private:
     size_t number;
     ofstream fout;
 
-    size_t recursive_visualize(bool is_left, node_ptr node);
+    size_t recursive_visualize(node_ptr node);
 };
 
 #endif //VISUALIZER_H

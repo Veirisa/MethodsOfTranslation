@@ -6,7 +6,7 @@ node_ptr parser::parse(const string& s) {
 };
 
 node_ptr parser::parse_descr_list() {
-    node_ptr node = new Node("DESCR_LIST");
+    node_ptr node = make_shared<Node>(Node("DESCR_LIST"));
     switch (lex.get_cur_token()) {
         case NAME:
             node->children.push_back(parse_descr());
@@ -22,7 +22,7 @@ node_ptr parser::parse_descr_list() {
 }
 
 node_ptr parser::parse_descr_list_continue() {
-    node_ptr node = new Node("DESCR_LIST'");
+    node_ptr node = make_shared<Node>(Node("DESCR_LIST'"));
     switch (lex.get_cur_token()) {
         case NAME:
             node->children.push_back(parse_descr());
@@ -40,12 +40,12 @@ node_ptr parser::parse_descr_list_continue() {
 }
 
 node_ptr parser::parse_descr() {
-    node_ptr node = new Node("DESCR");
+    node_ptr node = make_shared<Node>(Node("DESCR"));
     switch (lex.get_cur_token()) {
         case NAME:
             node->children.push_back(parse_name(true));
             node->children.push_back(parse_var_list());
-            node->children.push_back(new Node(";"));
+            node->children.push_back(make_shared<Node>(Node(";")));
             lex.next_pos();
             break;
         default:
@@ -58,7 +58,7 @@ node_ptr parser::parse_descr() {
 }
 
 node_ptr parser::parse_var_list() {
-    node_ptr node = new Node("VAR_LIST");
+    node_ptr node = make_shared<Node>(Node("VAR_LIST"));
     switch (lex.get_cur_token()) {
         case STAR:
         case NAME:
@@ -75,10 +75,10 @@ node_ptr parser::parse_var_list() {
 }
 
 node_ptr parser::parse_var_list_continue() {
-    node_ptr node = new Node("VAR_LIST'");
+    node_ptr node = make_shared<Node>(Node("VAR_LIST'"));
     switch (lex.get_cur_token()) {
         case COMMA:
-            node->children.push_back(new Node(","));
+            node->children.push_back(make_shared<Node>(Node(",")));
             lex.next_pos();
             node->children.push_back(parse_var());
             node->children.push_back(parse_var_list_continue());
@@ -95,10 +95,10 @@ node_ptr parser::parse_var_list_continue() {
 }
 
 node_ptr parser::parse_var() {
-    node_ptr node = new Node("VAR");
+    node_ptr node = make_shared<Node>(Node("VAR"));
     switch(lex.get_cur_token()) {
         case STAR:
-            node->children.push_back(new Node("*"));
+            node->children.push_back(make_shared<Node>(Node("*")));
             lex.next_pos();
             node->children.push_back(parse_var());
             break;
@@ -115,7 +115,7 @@ node_ptr parser::parse_var() {
 }
 
 node_ptr parser::parse_name(bool is_type) {
-    node_ptr node = new Node(is_type  ? "TYPE_NAME" : "VAR_NAME");
+    node_ptr node = make_shared<Node>(Node(is_type  ? "TYPE_NAME" : "VAR_NAME"));
     string name;
     while (lex.cur_is_letter()) {
         name += lex.get_cur_char();
@@ -134,6 +134,6 @@ node_ptr parser::parse_name(bool is_type) {
             throw parser_exception("Wrong follow of variable name", lex.get_cur_pos());
         }
     }
-    node->children.push_back(new Node(name));
+    node->children.push_back(make_shared<Node>(Node(name)));
     return node;
 }

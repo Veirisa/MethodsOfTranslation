@@ -5,7 +5,7 @@
 #include "lexical_analyzer.h"
 
 struct Node;
-typedef Node* node_ptr;
+typedef shared_ptr<Node> node_ptr;
 
 struct Node {
 

@@ -26,10 +26,12 @@ private:
     node_ptr parse_descr_list();
     node_ptr parse_descr_list_continue();
     node_ptr parse_descr();
+    node_ptr parse_type_name();
     node_ptr parse_var_list();
     node_ptr parse_var_list_continue();
     node_ptr parse_var();
-    node_ptr parse_name(bool is_type);
+    node_ptr parse_var_name();
+    string get_name();
 };
 
 #endif //PARSER_H

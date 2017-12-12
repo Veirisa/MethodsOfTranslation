@@ -8,7 +8,7 @@
 *`DESCR_LIST`* -> *`DESCR DESCR_LIST'`*<br>
 *`DESCR_LIST'`* -> *`DESCR DESCR_LIST'`* | *`eps`* <br>
 *`DESCR`* -> *`TYPE_NAME VAR_LIST;`*<br>
-*`TYPE_NAME`* ->*`[A-Za-z]([A-Za-z])*`*<br>
+*`TYPE_NAME`* ->*`word`*<br>
 *`VAR_LIST`* -> *`VAR VAR_LIST'`*<br>
 *`VAR_LIST'`* -> *`,VAR VAR_LIST'`* | *`eps`*<br>
 *`VAR`* -> *`*VAR`* | *`VAR_NAME`*<br>

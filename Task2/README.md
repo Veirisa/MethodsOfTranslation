@@ -12,7 +12,9 @@
 *`VAR_LIST`* -> *`VAR VAR_LIST'`*<br>
 *`VAR_LIST'`* -> *`,VAR VAR_LIST'`* | *`eps`*<br>
 *`VAR`* -> *`*VAR`* | *`VAR_NAME`*<br>
-*`VAR_NAME`* ->*`[A-Za-z]([A-Za-z])*`*<br>
+*`VAR_NAME`* ->*`word`*<br>
+
+*(word -  это \[A-Za-z\](\[A-Za-z\])\*)*
 
 Нетерминал | Описание | FIRST | FOLLOW
 -|-|-|-
@@ -24,8 +26,6 @@ VAR_LIST | Список переменных | `*`, `word` | `;`
 VAR_LIST' | Продолжение списка переменных |  `,`, `eps`  | `;`
 VAR | Переменная  |  `*`, `word` | `,`,`;`
 VAR_NAME | Имя переменной |  `word` | `,`,`;`
-
-*где word -  это [A-Za-z]([A-Za-z])\**
 
 ## Пример
 Дерево разбора для: *int a, \*b, \*\*\*c, d;*<br>

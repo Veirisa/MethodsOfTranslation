@@ -30,7 +30,7 @@ private:
 
     bool is_blank(size_t pos);
     bool is_letter(size_t pos);
-    bool is_last(size_t pos);
+    bool is_end(size_t pos);
 };
 
 #endif //LEXICAL_ANALYZER_H

@@ -12,13 +12,13 @@ bool lexical_analyzer::is_letter(size_t pos) {
     return (s[pos] >= 'a' && s[pos] <= 'z') || (s[pos] >= 'A' && s[pos] <= 'Z');
 }
 
-bool lexical_analyzer::is_last(size_t pos) {
-    return pos == s.size() - 1;
+bool lexical_analyzer::is_end(size_t pos) {
+    return pos == s.size();
 }
 
 void lexical_analyzer::inc_pos(size_t x) {
     cur_pos += x;
-    if (cur_pos >= s.size()) {
+    if (cur_pos > s.size()) {
         throw parser_exception("Out of string range");
     }
 }
@@ -29,6 +29,10 @@ void lexical_analyzer::next_token() {
         inc_pos(1);
     }
     cur_token_length = 1;
+    if (is_end(cur_pos)) {
+        cur_token = END;
+        return;
+    }
     switch (s[cur_pos]) {
         case '*':
             cur_token = STAR;
@@ -39,13 +43,10 @@ void lexical_analyzer::next_token() {
         case ';':
             cur_token = SEMICOLON;
             break;
-        case '$':
-            cur_token = END;
-            break;
         default:
             if (is_letter(cur_pos)) {
                 cur_token = NAME;
-                while (!is_last(cur_pos + cur_token_length - 1) && is_letter(cur_pos + cur_token_length)) {
+                while (!is_end(cur_pos + cur_token_length) && is_letter(cur_pos + cur_token_length)) {
                     ++cur_token_length;
                 }
             } else {
@@ -63,5 +64,8 @@ token lexical_analyzer::get_cur_token() {
 }
 
 string lexical_analyzer::get_cur_token_string() {
+    if (cur_token == END) {
+        throw parser_exception("Impossible to get string representation of the end");
+    }
     return string(s, cur_pos, cur_token_length);
 }

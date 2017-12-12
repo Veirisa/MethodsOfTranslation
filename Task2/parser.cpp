@@ -1,7 +1,7 @@
 #include "parser.h"
 
 node_ptr parser::parse(const string& s) {
-    lex = lexical_analyzer(s + '$');
+    lex = lexical_analyzer(s);
     lex.next_token();
     return parse_descr_list();
 };

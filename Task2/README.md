@@ -15,7 +15,7 @@
 *`VAR_NAME`* ->*`word`*<br>
 *`ARRAY`* ->*`size`* | *`eps`* <br>
 
-*(word -  это \[A-Za-z\](\[A-Za-z\])\*)*
+*(word -  это \[A-Za-z\](\[A-Za-z\])\*)* <br>
 *(size -  это [\[0-9\](\[0-9\])\*)*]
 
 Нетерминал | Описание | FIRST | FOLLOW

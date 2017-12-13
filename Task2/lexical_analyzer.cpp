@@ -12,6 +12,14 @@ bool lexical_analyzer::is_letter(size_t pos) {
     return (s[pos] >= 'a' && s[pos] <= 'z') || (s[pos] >= 'A' && s[pos] <= 'Z');
 }
 
+bool lexical_analyzer::is_number(size_t pos) {
+    return (s[pos] >= '0' && s[pos] <= '9');
+}
+
+bool lexical_analyzer::is_end_of_size(size_t pos) {
+    return s[pos] == ']';
+}
+
 bool lexical_analyzer::is_end(size_t pos) {
     return pos == s.size();
 }
@@ -43,6 +51,16 @@ void lexical_analyzer::next_token() {
         case ';':
             cur_token = SEMICOLON;
             break;
+        case '[':
+            cur_token = SIZE;
+            while (!is_end(cur_pos + cur_token_length) && !is_end_of_size(cur_pos + cur_token_length) && is_number(cur_pos + cur_token_length)) {
+                ++cur_token_length;
+            }
+            if (cur_token_length < 2 || !is_end_of_size(cur_pos + cur_token_length)) {
+                throw parser_exception("Illegal token", cur_pos);
+            }
+            ++cur_token_length;
+            break;
         default:
             if (is_letter(cur_pos)) {
                 cur_token = NAME;
@@ -50,6 +68,9 @@ void lexical_analyzer::next_token() {
                     ++cur_token_length;
                 }
             } else {
+                if (is_end_of_size(cur_pos) || is_number(cur_pos)) {
+                    throw parser_exception("Illegal token", cur_pos);
+                }
                 throw parser_exception("Illegal character", cur_pos);
             }
     }

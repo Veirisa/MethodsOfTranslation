@@ -2,7 +2,7 @@
 
 void get_from_tree(bool is_type_name, string& s, node_ptr node) {
     if (node->children.empty()) {
-        if (node->str.back() != '\'') {
+        if (node->str.back() != '\'' && node->str != "ARRAY") {
             s += node->str;
             if (is_type_name) {
                 s += ' ';
@@ -56,6 +56,7 @@ const string default_test[TESTS_SIZE] =
 
 //test for visualisation:
 const string test = "int a, *b, ***c, d;";
+// const string test = "int a[3], **b, c; long **d[11];";
 
 int main() {
     parser test_parser;

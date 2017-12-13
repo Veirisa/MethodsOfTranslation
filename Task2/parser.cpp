@@ -121,6 +121,7 @@ node_ptr parser::parse_var() {
             break;
         case NAME:
             node->children.push_back(parse_var_name());
+            node->children.push_back(parse_array());
             break;
         default:
             throw parser_exception("Wrong first of variable", lex.get_cur_pos());
@@ -141,8 +142,27 @@ node_ptr parser::parse_var_name() {
         default:
             throw parser_exception("Wrong first of variable name", lex.get_cur_pos());
     }
-    if (lex.get_cur_token() != COMMA && lex.get_cur_token() != SEMICOLON) {
+    if (lex.get_cur_token() != COMMA && lex.get_cur_token() != SEMICOLON && lex.get_cur_token() != SIZE) {
         throw parser_exception("Wrong follow of variable name", lex.get_cur_pos());
+    }
+    return node;
+}
+
+node_ptr parser::parse_array() {
+    node_ptr node = make_shared<Node>(Node("ARRAY"));
+    switch (lex.get_cur_token()) {
+        case SIZE:
+            node->children.push_back(make_shared<Node>(Node(lex.get_cur_token_string())));
+            lex.next_token();
+            break;
+        case COMMA:
+        case SEMICOLON:
+            break;
+        default:
+            throw parser_exception("Wrong first of array", lex.get_cur_pos());
+    }
+    if (lex.get_cur_token() != COMMA && lex.get_cur_token() != SEMICOLON) {
+        throw parser_exception("Wrong follow of array", lex.get_cur_pos());
     }
     return node;
 }

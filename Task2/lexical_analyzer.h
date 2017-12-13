@@ -5,7 +5,7 @@
 #include "parser_exception.h"
 
 enum token {
-    BEGIN, NAME, STAR, COMMA, SEMICOLON, END
+    BEGIN, NAME, SIZE, STAR, COMMA, SEMICOLON, END
 };
 
 struct lexical_analyzer {
@@ -30,6 +30,8 @@ private:
 
     bool is_blank(size_t pos);
     bool is_letter(size_t pos);
+    bool is_number(size_t pos);
+    bool is_end_of_size(size_t pos);
     bool is_end(size_t pos);
 };
 

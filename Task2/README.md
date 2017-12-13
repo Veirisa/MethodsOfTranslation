@@ -10,11 +10,13 @@
 *`DESCR`* -> *`TYPE_NAME VAR_LIST;`*<br>
 *`TYPE_NAME`* ->*`word`*<br>
 *`VAR_LIST`* -> *`VAR VAR_LIST'`*<br>
-*`VAR_LIST'`* -> *`,VAR VAR_LIST'`* | *`eps`*<br>
-*`VAR`* -> *`*VAR`* | *`VAR_NAME`*<br>
+*`VAR_LIST'`* -> *`,VAR VAR_LIST'`* | *`eps`* <br>
+*`VAR`* -> *`*VAR`* | *`VAR_NAME ARRAY`*<br>
 *`VAR_NAME`* ->*`word`*<br>
+*`ARRAY`* ->*`size`* | *`eps`* <br>
 
 *(word -  это \[A-Za-z\](\[A-Za-z\])\*)*
+*(size -  это [\[0-9\](\[0-9\])\*)*]
 
 Нетерминал | Описание | FIRST | FOLLOW
 -|-|-|-
@@ -25,7 +27,8 @@ TYPE_NAME | Имя типа | `word` | `*`, `word`
 VAR_LIST | Список переменных | `*`, `word` | `;`
 VAR_LIST' | Продолжение списка переменных |  `,`, `eps`  | `;`
 VAR | Переменная  |  `*`, `word` | `,`,`;`
-VAR_NAME | Имя переменной |  `word` | `,`,`;`
+VAR_NAME | Имя переменной |  `word` | `size`,`,`,`;`
+SIZE | Размер массива |  `size` ,`eps` | `,`,`;`
 
 ## Пример
 Дерево разбора для: *int a, \*b, \*\*\*c, d;*<br>

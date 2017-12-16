@@ -33,6 +33,6 @@ VAR_NAME | Имя переменной |  `word` | `size`,`,`,`;`
 ARRAY | Часть описания массива |  `size` ,`eps` | `,`,`;`
 
 ## Пример
-Дерево разбора для: *int a, \*b, \*\*\*c, d;*<br>
+Дерево разбора для: *int a, \*b, \*\*\*c, d;*
 
 <img src="tree.png" style="width: 500px; float: midle" />

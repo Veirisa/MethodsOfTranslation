@@ -159,7 +159,7 @@ return_part returns [String res]:
                     RETURN {$res = "return";} (value {$res += " " + $value.res;})? SEMICOLON {$res += ";\n";};
 
 condition returns [String res]:
-                    LBRACKET lv=logic_value {$res = "(" + $lv.res;} (LOGIC lvnext=logic_value {$res += " " + $LOGIC.text + " " + $lvnext.res;})? RBRACKET {$res += ")";};
+                    LBRACKET lv=logic_value {$res = "(" + $lv.res;} (LOGIC lvnext=logic_value {$res += " " + $LOGIC.text + " " + $lvnext.res;})* RBRACKET {$res += ")";};
 
 logic_value returns [String res] @init{$res = "";}:
                     comparing {$res += $comparing.res;} | BOOL {$res += $BOOL.text;} | NAME {$res += getNewName($NAME.text);};

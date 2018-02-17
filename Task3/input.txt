@@ -1,0 +1,37 @@
+bool flag = true;                                            
+                                                             
+#include "stdlib.h"                                          
+                                                             
+void f(int x1, float x2, char x3) {                          
+    int i = 1;                                               
+    while (true) {                                           
+        if (x3 != 'a' || flag) {                             
+            x3 = 'a';                                        
+            x2 -= 0.5;                                       
+            x1 = i + 10;                                     
+        } else {                                             
+            return;                                          
+        }                                                    
+    }                                                        
+}                                                            
+                                                             
+#include <iostream>                                          
+                                                             
+int a = 3, b = 4;                                            
+float z, x = 3.1, y = 4.2, t;                                
+                                                             
+int mm10 = a - b;                                            
+                                                             
+int main() {                                                 
+    float fff = x / y;                                       
+    int q1, q2;                                              
+    std::cin >> q1 >> q2;                                    
+    f(mm10, fff, 'm');                                       
+    for (int i = 0, j = 10; i != j; i += 2) {                
+        if (a == b) {                                        
+            std::cout << "FAIL" << ' ' << a - b  << "\n";    
+            return 11;                                       
+        }                                                    
+    }                                                        
+    return 0;                                                
+}                                                            

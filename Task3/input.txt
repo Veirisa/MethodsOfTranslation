@@ -1,4 +1,4 @@
-bool flag = true;
+bool flag = false;
 
 #include "stdlib.h"
 
@@ -36,7 +36,8 @@ int main() {
             return 11;
         }
     }
+    printf("OK");
     return 0;
 }
 
-#include "err.h"                                                 
+#include "err.h"

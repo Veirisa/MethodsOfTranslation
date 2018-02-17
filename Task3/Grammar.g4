@@ -13,14 +13,13 @@ include_part: INCLUDE (STRING | INCLUDE_STRING);
 
 var_part: NAME NAME (APPROPRIATION value)? (COMMA NAME (APPROPRIATION value)?)* SEMICOLON;
 value: element (ARITH element)?;
-element: BOOL | NUMBER | STRING | CHAR | NAME;
+element: BOOL | NUMBER | STRING | CHAR | (AMPERSAND|)NAME;
 
 function_part: NAME NAME arguments body;
 arguments: LBRACKET ((NAME NAME (COMMA NAME NAME)*) |) RBRACKET;
 
-body: LFIGBRACKET (iostream_part | for_part | while_part | if_else_part | appr_part | var_part | call_part | return_part)* RFIGBRACKET;
+body: LFIGBRACKET (for_part | while_part | if_else_part | appr_part | var_part | call_part | return_part)* RFIGBRACKET;
 
-iostream_part: (CIN (READ NAME)+ | COUT (WRITE value)+) SEMICOLON;
 for_part: FOR LBRACKET (var_part | SEMICOLON) (comparing)? SEMICOLON (appr_part_for | RBRACKET) body;
 while_part: WHILE condition body;
 if_else_part: IF condition body (ELSE body)?;
@@ -44,16 +43,11 @@ NUMBER: [0-9]+('.'[0-9]+)?;
 STRING: '"'.*?'"';
 CHAR: '\''.'\'';
 
-CIN: 'std::cin';
-COUT: 'std::cout';
-READ: '>>';
-WRITE: '<<';
-
 APPROPRIATION: '=';
 ARITH_CHANGE: '+=' | '-=' | '/=' | '*=' | '%=';
 ARITH: '+' | '-' | '/' | '*' | '%';
 LOGIC: '||' | '&&';
-COMPARE: '!=' | '==';
+COMPARE: '>=' | '<=' | '>' | '<' | '!=' | '==';
 
 IF: 'if';
 ELSE: 'else';
@@ -68,3 +62,4 @@ LBRACKET: '(';
 RBRACKET: ')';
 LFIGBRACKET: '{';
 RFIGBRACKET: '}';
+AMPERSAND: '&';

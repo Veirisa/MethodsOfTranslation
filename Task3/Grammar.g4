@@ -62,9 +62,6 @@ grammar Grammar;
             name = iter.next();
             --ind;
         }
-        if (name == "") {
-            return "FUCK";
-        }
         return name;
     }
 

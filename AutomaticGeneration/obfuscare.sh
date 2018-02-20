@@ -1,0 +1,1 @@
+java org.antlr.v4.gui.TestRig Grammar code input.txt > output.txt

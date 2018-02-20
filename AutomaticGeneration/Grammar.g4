@@ -54,6 +54,20 @@ grammar Grammar;
         return name;
     }
 
+    String newFuctionName(String f) {
+        if (f.equals("main")) {
+            return f;
+        }
+        return getNewName(f);
+    }
+
+    String getFuctionName(String f) {
+        if (newNames.containsKey(f)) {
+            return newNames.get(f);
+        }
+        return f;
+    }
+
     String getRandomFakeName() {
         String name = "";
         int ind = random.nextInt(fakeNames.size());
@@ -126,7 +140,7 @@ element returns [String res] @init{$res = "";}:
                     BOOL {$res += $BOOL.text;} | NUMBER {$res += $NUMBER.text;} | STRING {$res += $STRING.text;} | CHAR {$res += $CHAR.text;} | ((AMPERSAND {$res += "&";})? NAME {$res += getNewName($NAME.text);});
 
 function_part returns [String res]:
-                    t=NAME f=NAME arguments body {$res = $t.text + " " + $f.text + $arguments.res + $body.res;};
+                    t=NAME f=NAME arguments body {$res = $t.text + " " + newFuctionName($f.text) + $arguments.res + $body.res;};
 
 arguments returns [String res]:
                     LBRACKET {$res = "(";} (t=NAME arg=NAME {$res += $t.text + " " + getNewName($arg.text);} (COMMA tnext=NAME argnext=NAME {$res += ", " + $tnext.text + " " + getNewName($argnext.text);})*)? RBRACKET {$res += ")";};
@@ -150,7 +164,7 @@ appr_part returns [String res]:
                     NAME {$res = getNewName($NAME.text) + " ";} (APPROPRIATION {$res += "= ";} | ARITH_CHANGE {$res += $ARITH_CHANGE.text + " ";}) value SEMICOLON {$res += $value.res + ";\n";};
 
 call_part returns [String res]:
-                    NAME LBRACKET {$res = $NAME.text + "(";} (v=value {$res += $v.res;} (COMMA vnext=value {$res += ", " + $vnext.res;})*)? RBRACKET SEMICOLON {$res += ");\n";};
+                    NAME LBRACKET {$res = getFuctionName($NAME.text) + "(";} (v=value {$res += $v.res;} (COMMA vnext=value {$res += ", " + $vnext.res;})*)? RBRACKET SEMICOLON {$res += ");\n";};
 
 return_part returns [String res]:
                     RETURN {$res = "return";} (value {$res += " " + $value.res;})? SEMICOLON {$res += ";\n";};
@@ -164,7 +178,7 @@ logic_value returns [String res] @init{$res = "";}:
 comparing returns [String res]:
                     v1=value COMPARE v2=value {$res = $v1.res + " " + $COMPARE.text + " " + $v2.res;};
 
-WS: [ \n\t]+ -> skip;
+WS: [ \r\n\t]+ -> skip;
 
 RETURN: 'return';
 INCLUDE: '#include';

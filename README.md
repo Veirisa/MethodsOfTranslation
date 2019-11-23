@@ -1,4 +1,4 @@
 # TranslationMethods
 
-- Ручное построение нисходящих парсеров.
-- Автоматические генераторы трансляторов.
+- Manual construction of descending parsers.
+- Automatic translator generators.

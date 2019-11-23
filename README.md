@@ -1,4 +1,4 @@
 # TranslationMethods
 
-- Manual construction of descending parsers.
+- Manual building of descending parsers.
 - Automatic translator generators.
